@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html>
-<body onload="getLocation()">
+<body>
 <!--
 <p>Click the button to get your coordinates.</p>
-
-<button onclick="getLocation()">Try It</button>  -->
-
-<p id="demo"></p>
+<button onclick="getLocation()">Try It</button>
+<p id="demo"></p>  -->
 
 <script>
-var x = document.getElementById("demo");
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
+function success(pos) {
+  var crd = pos.coords;
+  document.write(`${crd.latitude} `);
+  document.write(`${crd.longitude}`);
 }
 
-function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude;
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
 }
+
+navigator.geolocation.getCurrentPosition(success, error, options);
 </script>
 
 </body>
